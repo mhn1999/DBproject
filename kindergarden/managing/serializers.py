@@ -18,7 +18,8 @@ class ChildSerializer(serializers.ModelSerializer):
 		fields =['childID', 'classes','parents', 'hobbies', 'name',
                   'familyName','birthDate', 'age']
 class ClassSerializer(serializers.ModelSerializer):
+	children_list=serializers.ReadOnlyField()
 	class Meta:
 		model = Class
 		fields =['classNumber', 'teachers','price', 'year',
-                  'subject']		
+                  'subject','children_list']		

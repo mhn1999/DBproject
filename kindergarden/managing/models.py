@@ -36,7 +36,11 @@ class Class(models.Model):
     price= models.IntegerField()
     teachers=models.ManyToManyField(Teacher)
     def __str__(self):
-        return self.subject    
+        return self.subject 
+    @property
+    def children_list(self):
+        value_fileds=("childID","name","familyName")
+        return self.children.all().values(*value_fileds) 
 # Create your models here.
 class Child(models.Model):
 
@@ -47,7 +51,7 @@ class Child(models.Model):
     hobbies=models.CharField(max_length=200,null=True, blank=True)
     birthDate=models.DateTimeField()
     #category=models.CharField
-    classes=models.ManyToManyField(Class)
+    classes=models.ManyToManyField(Class, related_name="children")
     parents=models.ManyToManyField(Person)
     def __str__(self):
         return self.name
