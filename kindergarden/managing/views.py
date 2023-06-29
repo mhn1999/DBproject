@@ -29,6 +29,18 @@ class ChildInformation(APIView):
 		book = Child.objects.get(childID=pk)
 		serializer = ChildSerializer(book, many=False)
 		return Response(serializer.data)
+	
+class AllParentList(APIView):
+	def get(self,request):
+		book = Person.objects.all()
+		serializer = PersonSerializer(book, many=True)
+		return Response(serializer.data)
+	
+class ParentInformation(APIView):
+	def get(self,request,pk):
+		book = Person.objects.get(SSN=pk)
+		serializer = PersonSerializer(book, many=False)
+		return Response(serializer.data)
 
 class AllClassList(APIView):
 	def get(self,request):

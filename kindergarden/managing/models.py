@@ -28,19 +28,27 @@ class Teacher(Person):
     contract_salary=models.IntegerField()
     contract_number=models.IntegerField(unique=True)
     degree=models.CharField(max_length=200)
+    @property
+    def class_list(self):
+        value_fileds=("classNumber","subject","year")
+        return self.teacher_set.all().values(*value_fileds)
 
 class Class(models.Model):
     classNumber=models.BigAutoField(primary_key=True)
     subject= models.CharField(max_length=200)
     year = models.IntegerField()
     price= models.IntegerField()
-    teachers=models.ManyToManyField(Teacher)
+    teachers=models.ManyToManyField(Teacher, related_name="teacher_set")
     def __str__(self):
         return self.subject 
     @property
     def children_list(self):
         value_fileds=("childID","name","familyName")
         return self.children.all().values(*value_fileds) 
+    @property
+    def teacher_list(self):
+        value_fileds=("SSN","name","familyName",'degree')
+        return self.teachers.all().values(*value_fileds)
 # Create your models here.
 class Child(models.Model):
 
@@ -55,7 +63,14 @@ class Child(models.Model):
     parents=models.ManyToManyField(Person)
     def __str__(self):
         return self.name
-    
+    @property
+    def parent_list(self):
+        value_fileds=("SSN","name","familyName")
+        return self.parents.all().values(*value_fileds)
+    @property
+    def class_list(self):
+        value_fileds=("classNumber","subject","year","price")
+        return self.classes.all().values(*value_fileds)
     @property
     def age(self):
         return int(datetime.date.today().year)-int(self.birthDate.year)
