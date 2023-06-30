@@ -25,5 +25,5 @@ class ClassSerializer(serializers.ModelSerializer):
 	teacher_list=serializers.ReadOnlyField()
 	class Meta:
 		model = Class
-		fields =['classNumber', 'teacher_list','price', 'year',
+		fields =['classNumber', 'teacher_list','price', 'year','teachers',
                   'subject','children_list']		
